@@ -16,7 +16,7 @@ interface Users {
 }
 
 const users: Users = {
-  signUp: {     
+  signUp: {
     user: async (req, res, next) => {
       try {
         let { password, email } = req.body;
@@ -30,8 +30,6 @@ const users: Users = {
             newUser.save();
             res.status(201).json({ msg: "User Created" });
           });
-          res.status(200).json({ msg: "successfuly created" });
-          
         }
       } catch (error) {
         console.log(error);
@@ -51,8 +49,8 @@ const users: Users = {
           bcrypt.compare(password, user.password).then((isValid) => {
             if (isValid) {
               const token = jwt.sign({ userId: user._id }, key);
-              // res.cookie("token", token, { httpOnly: true });    
-              res.status(200).json({ msg: "user loged", token: token });
+              // res.cookie("token", token, { httpOnly: true });
+              res.status(200).json({ msg: "user loged", token: token, userId: user._id});
             } else {
               res.status(401).json({ msg: "Invalid password" });
             }
@@ -65,7 +63,6 @@ const users: Users = {
   },
   logout: {
     user: async (req, res) => {
-
       try {
         console.log("helo User");
       } catch (error) {
